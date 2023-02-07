@@ -2,7 +2,7 @@
 
 ## About
 
-I want to share something with you, some time ago, I play sudoku game and it really inspired me, I like this game very much, so I decided why not I try to make this game. So I start working on this game and try to understand the logic of game. After some time I fully understood the logic of the game and I started working on it and I made this game and I will share the logic with you. Beginners and inspired by this game. I made this game just to help people and I will share the logic everyone can make this game their own logic but I am sharing my repo and you can also contribute.
+I want to share something with you, some time ago, I play sudoku game and it really inspired me, I like this game very much, so I decided why not I try to make this game. So I start working on this game and try to understand the logic of game. After some time I fully understood the logic of the game and I started working on it and I made this game and I will share the logic with you. I made this game just to help people and I will share the logic everyone can make this game their own logic but I am sharing my repo and you can also contribute.
 
 ## How to play this game
 
