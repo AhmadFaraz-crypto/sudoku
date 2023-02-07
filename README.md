@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+# sudoku game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About
 
-## Available Scripts
+I want to share something with you, some time ago, I play sudoku game and it really inspired me, I like this game very much, so I decided why not I try to make this game. So I start working on this game and try to understand the logic of game. After some time I fully understood the logic of the game and I started working on it and I made this game and I will share the logic with you. Beginners and inspired by this game. I made this game just to help people and I will share the logic everyone can make this game their own logic but I am sharing my repo and you can also contribute.
 
-In the project directory, you can run:
+## How to play this game
 
-### `npm start`
+The goal of Sudoku is to fill the cells with numbers from 1 to 9. The numbers are placed in 9 squares, 3x3 each, thus, in each row, in each column and in each small square there are 9 cells. The same digit can be used only once in each separate column, each line and in each small square. The level of difficulty depends on how many digits are already indicated in the cells. If you open plenty of numbers - then you have very easy Sudoku.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+you can see more details on this link: https://sudoku.com/easy/
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Game Logic
 
-### `npm test`
+We have to create patterns first as you can see in the constants/patterns, all values set according to the ids, then we have to take some random values to show in the UI, so when user enter the value in the cell so we can check the value against the Id whether value is match or not, according to this we can handle all the scnarios as you can see in the code.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Quick start
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1.  Make sure that you have Node.js v16.15.1 and npm v5 or above installed.
+2.  Clone this repo using `https://github.com/AhmadFaraz-crypto/sudoku.git`
+3.  Move to the appropriate directory: `cd sudoku`.<br />
+4.  Run `npm install` in order to install dependencies and clean the git repo.<br />
+    _At this point you can run `npm start` to see the example app at `http://localhost:3000`._
+5.  Run `yarn test` to run test cases.
+6.  Run `yarn run clean` to delete the example app.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Contributions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Everyone can contribute to this game, there are a lot of things and improvements I haven't done yet, you can create an issue and make a pull request so we can work on it.
 
-### `npm run eject`
+## Demo
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+https://youtu.be/SZWZw8P4t9o

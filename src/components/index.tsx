@@ -9,7 +9,7 @@ import {
   col_7_ids,
   col_8_ids,
   col_9_ids,
-} from "../utils/cols";
+} from "../constants/cols";
 import {
   row_1_ids,
   row_2_ids,
@@ -20,8 +20,8 @@ import {
   row_7_ids,
   row_8_ids,
   row_9_ids,
-} from "../utils/rows";
-import { pattern_1 } from "../utils/patterns";
+} from "../constants/rows";
+import { pattern_1 } from "../constants/patterns";
 
 // all filled cells
 let filledIds = [] as any[];
@@ -109,7 +109,6 @@ const Sudoku = () => {
   // added colors according to active cell
   const setColor = (id: string, color: string) => {
     const values = removeDuplicates(wrongVal);
-    console.log("values=====", values);
     const eleId = document.getElementById(`${id}`) as HTMLInputElement;
     if (!values.includes(String(id))) {
       if (color === "completed") {
@@ -575,7 +574,6 @@ const Sudoku = () => {
       } else if (event.target.localName === "button") {
         const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         if (numbers.includes(Number(event.target.value))) {
-          console.log("event.target.value", event.target.value);
           let e = {
             ...event,
             target: { id: inputId },
