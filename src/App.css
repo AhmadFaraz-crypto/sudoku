@@ -1,0 +1,228 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding-top: 50px; */
+  margin-bottom: 60px;
+  padding-bottom: 20px;
+  /* color: #e8eaed !important; */
+  border: 1px solid #5f6368 !important;
+  border-radius: 4px !important;
+  box-sizing: border-box !important;
+}
+#main-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  width: 40%;
+  height: 100%;
+  /* min-height: 100vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btns {
+  margin-top: 20px;
+}
+
+.new-game {
+  width: 100%;
+  max-width: 260px;
+  min-width: 260px;
+  height: 70px;
+  font-size: 24px !important;
+  font-weight: 500;
+  margin-top: 30px !important;
+  color: #e8eaed !important;
+  border: 1px solid #5f6368 !important;
+  border-radius: 4px !important;
+  box-sizing: border-box !important;
+}
+
+button {
+  width: 80px;
+  height: 80px;
+  font-size: 32px !important;
+  margin: 5px !important;
+  background: #5f6368;
+  color: #e8eaed;
+  border: 1px solid #5f6368;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+}
+
+.row {
+  max-width: 154px;
+  min-width: 154px;
+  width: 100%;
+  margin-right: -1px !important;
+  margin-left: -1px !important;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.btn-row {
+  max-width: 280px;
+  min-width: 280px;
+  width: 100%;
+  margin-right: -1px !important;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+}
+
+.btn-row:last-child {
+  border-right: none !important;
+}
+
+.border-2 {
+  border-bottom: 2px solid black;
+}
+
+.border-6 {
+  border-top: 2px solid black;
+}
+
+.row:last-child {
+  border-right: 2px solid black;
+}
+
+input:first-child {
+  border-left: 1px solid #d3d3d3;
+}
+
+input:focus-visible {
+  outline: none;
+}
+
+.greyHighLight {
+  background-color: #C0C0C0 !important;
+}
+
+.silverSolidBox {
+  /* background-color: #C0C0C0 !important;
+  color: #e8eaed !important; */
+  background-color: 1px solid #5f6368 !important;
+}
+
+.mercuryBox {
+  background-color: #E8E8E8;
+}
+
+.mercuryRow {
+  background: #5f6368;
+  color: #e8eaed;
+  border: 1px solid #5f6368;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.mercuryCol {
+  background-color: #E8E8E8;
+}
+
+.grey {
+  background-color: 	#E8E8E8;
+}
+
+.input-style {
+  width: 50px;
+  height: 50px;
+  border-top: 1px solid #d3d3d3;
+  border-bottom: none;
+  border-left: none;
+  border-right : 1px solid #d3d3d3;
+  font-size : 32px;
+  font-weight : normal;
+  text-align : center;
+  caret-color : transparent;
+}
+
+.div-row {
+  max-width: 154px;
+  min-width: 154px;
+  width: 100%;
+  margin-right: -1px;
+  margin-left: -1px;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  border-left: 2px solid black;
+}
+
+@media only screen and (max-width: 1045px) {
+  #container {
+    width: 58%;
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  #main-container {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  #container {
+    width: 100%;
+    overflow-y: auto;
+    justify-content: flex-start;
+  }
+  .heading {
+    padding-top: 0px;
+    padding-bottom: 15px;
+}
+}

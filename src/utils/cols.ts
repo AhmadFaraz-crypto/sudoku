@@ -1,0 +1,9 @@
+export const col_1_ids = [1, 2, 3, 28, 29, 30, 55, 56, 57];
+export const col_2_ids = [4, 5, 6, 31, 32, 33, 58, 59, 60];
+export const col_3_ids = [7, 8, 9, 34, 35, 36, 61, 62, 63];
+export const col_4_ids = [10, 11, 12, 37, 38, 39, 64, 65, 66];
+export const col_5_ids = [13, 14, 15, 40, 41, 42, 67, 68, 69];
+export const col_6_ids = [16, 17, 18, 43, 44, 45, 70, 71, 72];
+export const col_7_ids = [19, 20, 21, 46, 47, 48, 73, 74, 75];
+export const col_8_ids = [22, 23, 24, 49, 50, 51, 76, 77, 78];
+export const col_9_ids = [25, 26, 27, 52, 53, 54, 79, 80, 81];
