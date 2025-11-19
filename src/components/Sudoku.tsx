@@ -45,6 +45,7 @@ const Sudoku: React.FC = () => {
   const inputIdRef = useRef<string>("");
   const currentPatternRef = useRef<any>(null);
   const revealedCellsRef = useRef<Set<number>>(new Set());
+  const isInitializingRef = useRef<boolean>(false);
 
   const difficultyConfig: Record<Difficulty, DifficultyConfig> = {
     easy: { minCells: 40, maxCells: 45, label: "Easy" },
@@ -67,7 +68,8 @@ const Sudoku: React.FC = () => {
   };
 
   useEffect(() => {
-    if (boardReady) {
+    if (boardReady && !isInitializingRef.current) {
+      isInitializingRef.current = true;
       clearAllValues();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,12 +94,18 @@ const Sudoku: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if ((!isPortrait || !isMobile) && boardReady) {
+    if ((!isPortrait || !isMobile) && boardReady && !isInitializingRef.current) {
       const hasValues = filledIdsRef.current.length > 0;
-      if (!hasValues) {
+      const hasInitialValues = Array.from({ length: 81 }, (_, i) => {
+        const element = document.getElementById(`${i + 1}`) as HTMLInputElement;
+        return element && element.value !== "";
+      }).some(Boolean);
+      
+      if (!hasValues && !hasInitialValues) {
+        isInitializingRef.current = true;
         setTimeout(() => {
           newGame();
-        }, 100);
+        }, 200);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -387,13 +395,34 @@ const Sudoku: React.FC = () => {
     setHintCount(3);
     revealedCellsRef.current.clear();
     
+    const difficultyToUse: Difficulty = newDifficulty || difficulty || "easy";
     setTimeout(() => {
-      newGame(newDifficulty);
+      newGame(difficultyToUse);
     }, 50);
   };
 
   const newGame = (gameDifficulty?: Difficulty) => {
-    const currentDifficulty = gameDifficulty || difficulty;
+    let currentDifficulty: Difficulty = "easy";
+    if (gameDifficulty && typeof gameDifficulty === "string" && gameDifficulty.length > 0) {
+      currentDifficulty = gameDifficulty;
+    } else if (difficulty && typeof difficulty === "string" && difficulty.length > 0) {
+      currentDifficulty = difficulty;
+    }
+    
+    for (let index = 1; index <= 81; index++) {
+      const element = document.getElementById(`${index}`) as HTMLInputElement;
+      if (element) {
+        element.value = "";
+        element.style.color = "";
+        element.style.fontWeight = "";
+        element.removeAttribute("data-hint");
+        element.setAttribute("title", "");
+        element.removeAttribute("data-last-value");
+      }
+    }
+    
+    filledIdsRef.current = [];
+    wrongValRef.current = [];
     let patterns: any[];
     if (currentDifficulty === "easy") {
       patterns = easyPatterns;
@@ -407,6 +436,11 @@ const Sudoku: React.FC = () => {
       patterns = masterPatterns;
     } else {
       patterns = extremePatterns;
+    }
+    
+    if (!patterns || patterns.length === 0) {
+      console.error("No patterns available for difficulty:", currentDifficulty);
+      return;
     }
     
     const selectedPattern =
@@ -432,6 +466,10 @@ const Sudoku: React.FC = () => {
     const shuffledCells = [...allCells].sort(() => Math.random() - 0.5);
 
     const config = difficultyConfig[currentDifficulty];
+    if (!config) {
+      console.error("No config found for difficulty:", currentDifficulty);
+      return;
+    }
     const targetCells =
       Math.floor(Math.random() * (config.maxCells - config.minCells + 1)) +
       config.minCells;
@@ -462,6 +500,7 @@ const Sudoku: React.FC = () => {
     
     revealedCellsRef.current = initialFilledIds;
     setHintCount(3);
+    isInitializingRef.current = false;
   };
 
   const handleHint = () => {
