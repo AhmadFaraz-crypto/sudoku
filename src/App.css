@@ -574,7 +574,7 @@ input:focus-visible {
   }
 }
 
-@media (max-width: 780px) and (orientation: landscape) {
+@media (max-width: 1045px) and (orientation: landscape) {
   .game-content {
     flex-direction: column;
     align-items: center;

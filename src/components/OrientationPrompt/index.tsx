@@ -8,7 +8,7 @@ const OrientationPrompt: React.FC = () => {
   useEffect(() => {
     const checkOrientation = () => {
       const isPortraitMode = window.innerHeight > window.innerWidth;
-      const isMobileDevice = window.innerWidth <= 780;
+      const isMobileDevice = window.innerWidth <= 1045;
       setIsPortrait(isPortraitMode);
       setIsMobile(isMobileDevice);
     };
