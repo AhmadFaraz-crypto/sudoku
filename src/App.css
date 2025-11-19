@@ -574,6 +574,95 @@ input:focus-visible {
   }
 }
 
+@media only screen and (max-width: 480px) {
+  .game-layout {
+    padding: 0 10px;
+  }
+
+  .heading h1 {
+    font-size: 24px;
+  }
+
+  .input-style {
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+  }
+
+  .div-row {
+    max-width: 105px;
+    min-width: 105px;
+  }
+
+  .row {
+    max-width: 105px;
+    min-width: 105px;
+  }
+
+  .game-content {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .game-board-section {
+    width: 100%;
+  }
+
+  #container {
+    padding: 8px;
+    justify-content: center;
+  }
+
+  .difficulty-selector {
+    padding: 12px;
+  }
+
+  .difficulty-label {
+    font-size: 12px;
+  }
+
+  .difficulty-btn {
+    min-width: 70px;
+    height: 36px;
+    font-size: 12px !important;
+    padding: 0 12px;
+  }
+
+  .action-buttons {
+    gap: 12px;
+  }
+
+  .action-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .action-icon {
+    font-size: 24px;
+  }
+
+  #btns button {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .btn-row {
+    max-width: 150px;
+    min-width: 150px;
+  }
+
+  .number-pad-container {
+    gap: 12px;
+  }
+
+  .new-game-btn {
+    height: 48px;
+    font-size: 14px !important;
+  }
+}
+
 #main-container h3 {
   font-size: 24px;
   font-weight: 600;

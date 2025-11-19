@@ -278,15 +278,19 @@ const Sudoku: React.FC = () => {
         let correctValue: number | null = null;
         for (let index = 0; index < currentPattern.length; index++) {
           const col = currentPattern[index];
-          Object.keys(col).forEach((key) => {
+          const keys = Object.keys(col);
+          for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+            const key = keys[keyIndex];
             if (key.startsWith("col_") && col[key]) {
               for (let j = 0; j < col[key].length; j++) {
                 if (col[key][j].id === cellId) {
                   correctValue = col[key][j].val;
+                  break;
                 }
               }
             }
-          });
+            if (correctValue !== null) break;
+          }
           if (correctValue !== null) break;
         }
         
@@ -369,15 +373,19 @@ const Sudoku: React.FC = () => {
     currentPatternRef.current = selectedPattern;
 
     const allCellsMap = new Map<number, { id: number; val: number }>();
-    selectedPattern.forEach((col: any) => {
-      Object.keys(col).forEach((key) => {
+    for (let patternIndex = 0; patternIndex < selectedPattern.length; patternIndex++) {
+      const col = selectedPattern[patternIndex];
+      const keys = Object.keys(col);
+      for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+        const key = keys[keyIndex];
         if (key.startsWith("col_") && col[key]) {
-          col[key].forEach((cell: { id: number; val: number }) => {
+          for (let cellIndex = 0; cellIndex < col[key].length; cellIndex++) {
+            const cell = col[key][cellIndex];
             allCellsMap.set(cell.id, cell);
-          });
+          }
         }
-      });
-    });
+      }
+    }
     const allCells = Array.from(allCellsMap.values());
 
     const shuffledCells = [...allCells].sort(() => Math.random() - 0.5);
@@ -419,15 +427,19 @@ const Sudoku: React.FC = () => {
     if (!currentPatternRef.current || hintCount <= 0) return;
 
     const allCellsMap = new Map<number, { id: number; val: number }>();
-    currentPatternRef.current.forEach((col: any) => {
-      Object.keys(col).forEach((key) => {
+    for (let patternIndex = 0; patternIndex < currentPatternRef.current.length; patternIndex++) {
+      const col = currentPatternRef.current[patternIndex];
+      const keys = Object.keys(col);
+      for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+        const key = keys[keyIndex];
         if (key.startsWith("col_") && col[key]) {
-          col[key].forEach((cell: { id: number; val: number }) => {
+          for (let cellIndex = 0; cellIndex < col[key].length; cellIndex++) {
+            const cell = col[key][cellIndex];
             allCellsMap.set(cell.id, cell);
-          });
+          }
         }
-      });
-    });
+      }
+    }
     const allCells = Array.from(allCellsMap.values());
 
     const emptyCells = allCells.filter((cell) => {
@@ -555,15 +567,19 @@ const Sudoku: React.FC = () => {
           
           for (let index = 0; index < currentPatternRef.current.length; index++) {
             const col = currentPatternRef.current[index];
-            Object.keys(col).forEach((key) => {
+            const keys = Object.keys(col);
+            for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+              const key = keys[keyIndex];
               if (key.startsWith("col_") && col[key]) {
                 for (let j = 0; j < col[key].length; j++) {
                   if (col[key][j].id === cellId) {
                     correctValue = col[key][j].val;
+                    break;
                   }
                 }
               }
-            });
+              if (correctValue !== null) break;
+            }
             if (correctValue !== null) break;
           }
           
@@ -632,4 +648,6 @@ const Sudoku: React.FC = () => {
 };
 
 export default Sudoku;
+
+
 
