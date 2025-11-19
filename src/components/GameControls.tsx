@@ -18,7 +18,7 @@ const GameControls: React.FC<GameControlsProps> = ({
 
   useEffect(() => {
     const checkMobile = () => {
-      const isMobileDevice = window.innerWidth <= 780;
+      const isMobileDevice = window.innerWidth <= 1045;
       const isLandscape = window.innerHeight < window.innerWidth;
       const shouldHide = isMobileDevice && isLandscape;
       setShouldHideNumberPad(shouldHide);
