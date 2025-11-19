@@ -574,6 +574,33 @@ input:focus-visible {
   }
 }
 
+@media (max-width: 780px) and (orientation: landscape) {
+  .game-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-board-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .game-controls-panel {
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .game-layout {
     padding: 0 10px;

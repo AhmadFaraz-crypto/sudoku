@@ -29,14 +29,17 @@ import DifficultySelector from "./DifficultySelector";
 import RestartPopup from "./RestartPopup";
 import GameControls from "./GameControls";
 import WinningAnimation from "./WinningAnimation";
+import OrientationPrompt from "./OrientationPrompt";
 
 const Sudoku: React.FC = () => {
   const [idsLength, setIdsLength] = useState<any[]>([]);
   const [boardReady, setBoardReady] = useState<boolean>(false);
-  const [difficulty, setDifficulty] = useState<Difficulty>("medium");
+  const [difficulty, setDifficulty] = useState<Difficulty>("easy");
   const [wrongAttempts, setWrongAttempts] = useState<number>(0);
   const [showRestartPopup, setShowRestartPopup] = useState<boolean>(false);
   const [hintCount, setHintCount] = useState<number>(3);
+  const [isPortrait, setIsPortrait] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const filledIdsRef = useRef<any[]>([]);
   const wrongValRef = useRef<any[]>([]);
   const inputIdRef = useRef<string>("");
@@ -59,7 +62,7 @@ const Sudoku: React.FC = () => {
   const handleDifficultyChange = (newDifficulty: Difficulty) => {
     setDifficulty(newDifficulty);
     if (boardReady) {
-      clearAllValues();
+      clearAllValues(newDifficulty);
     }
   };
 
@@ -69,6 +72,36 @@ const Sudoku: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardReady]);
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      const isPortraitMode = window.innerHeight > window.innerWidth;
+      const isMobileDevice = window.innerWidth <= 780;
+      setIsPortrait(isPortraitMode);
+      setIsMobile(isMobileDevice);
+    };
+
+    checkOrientation();
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+
+    return () => {
+      window.removeEventListener("resize", checkOrientation);
+      window.removeEventListener("orientationchange", checkOrientation);
+    };
+  }, []);
+
+  useEffect(() => {
+    if ((!isPortrait || !isMobile) && boardReady) {
+      const hasValues = filledIdsRef.current.length > 0;
+      if (!hasValues) {
+        setTimeout(() => {
+          newGame();
+        }, 100);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPortrait, isMobile, boardReady]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -298,10 +331,14 @@ const Sudoku: React.FC = () => {
           if (correctValue !== enteredValue) {
             elementId.style.color = "red";
             const cellIdString = String(cellId);
-            const isAlreadyWrong = wrongValRef.current.includes(cellIdString);
+            const lastValue = elementId.getAttribute("data-last-value");
+            const isNewValue = lastValue !== elementId.value;
             
-            if (!isAlreadyWrong) {
+            if (!wrongValRef.current.includes(cellIdString)) {
               wrongValRef.current.push(cellIdString);
+            }
+            
+            if (isNewValue) {
               setWrongAttempts((prev) => {
                 const newCount = prev + 1;
                 if (newCount >= 5) {
@@ -309,9 +346,11 @@ const Sudoku: React.FC = () => {
                 }
                 return newCount;
               });
+              elementId.setAttribute("data-last-value", elementId.value);
             }
           } else {
             elementId.style.color = "";
+            elementId.removeAttribute("data-last-value");
             const filterData = values.filter(
               (i) => i !== String(cellId)
             );
@@ -326,7 +365,7 @@ const Sudoku: React.FC = () => {
 
   const randomObjRef = useRef<any[]>([]);
 
-  const clearAllValues = () => {
+  const clearAllValues = (newDifficulty?: Difficulty) => {
     setIdsLength([]);
     
     for (let index = 1; index <= 81; index++) {
@@ -337,6 +376,7 @@ const Sudoku: React.FC = () => {
         element.style.fontWeight = "";
         element.removeAttribute("data-hint");
         element.setAttribute("title", "");
+        element.removeAttribute("data-last-value");
       }
     }
     
@@ -348,21 +388,22 @@ const Sudoku: React.FC = () => {
     revealedCellsRef.current.clear();
     
     setTimeout(() => {
-      newGame();
+      newGame(newDifficulty);
     }, 50);
   };
 
-  const newGame = () => {
+  const newGame = (gameDifficulty?: Difficulty) => {
+    const currentDifficulty = gameDifficulty || difficulty;
     let patterns: any[];
-    if (difficulty === "easy") {
+    if (currentDifficulty === "easy") {
       patterns = easyPatterns;
-    } else if (difficulty === "medium") {
+    } else if (currentDifficulty === "medium") {
       patterns = mediumPatterns;
-    } else if (difficulty === "hard") {
+    } else if (currentDifficulty === "hard") {
       patterns = hardPatterns;
-    } else if (difficulty === "expert") {
+    } else if (currentDifficulty === "expert") {
       patterns = expertPatterns;
-    } else if (difficulty === "master") {
+    } else if (currentDifficulty === "master") {
       patterns = masterPatterns;
     } else {
       patterns = extremePatterns;
@@ -390,7 +431,7 @@ const Sudoku: React.FC = () => {
 
     const shuffledCells = [...allCells].sort(() => Math.random() - 0.5);
 
-    const config = difficultyConfig[difficulty];
+    const config = difficultyConfig[currentDifficulty];
     const targetCells =
       Math.floor(Math.random() * (config.maxCells - config.minCells + 1)) +
       config.minCells;
@@ -603,45 +644,50 @@ const Sudoku: React.FC = () => {
 
   return (
     <div className="sudoku-app">
-      <div className="heading">
-        <h1>Sudoku</h1>
-      </div>
-      <div className="game-layout">
-        <div id="main-container">
-          <DifficultySelector
-            difficulty={difficulty}
-            onDifficultyChange={handleDifficultyChange}
-          />
-          {idsLength.length === 81 ? (
-            <>
-              <div className="success-message">
-                <h3>Congratulations, You have completed this game!</h3>
-              </div>
-              <WinningAnimation 
-                onClose={() => setIdsLength([])}
-                onNewGame={clearAllValues}
+      <OrientationPrompt />
+      {(!isPortrait || !isMobile) && (
+        <>
+          <div className="heading">
+            <h1>Sudoku</h1>
+          </div>
+          <div className="game-layout">
+            <div id="main-container">
+              <DifficultySelector
+                difficulty={difficulty}
+                onDifficultyChange={handleDifficultyChange}
               />
-            </>
-          ) : (
-            <div className="game-content">
-              <div className="game-board-section">
-                <GameBoard onBoardCreated={handleBoardCreated} />
-              </div>
-              <GameControls
-                onHint={handleHint}
-                onNewGame={clearAllValues}
-                wrongAttempts={wrongAttempts}
-                hintCount={hintCount}
-              />
+              {idsLength.length === 81 ? (
+                <>
+                  <div className="success-message">
+                    <h3>Congratulations, You have completed this game!</h3>
+                  </div>
+                  <WinningAnimation 
+                    onClose={() => setIdsLength([])}
+                    onNewGame={clearAllValues}
+                  />
+                </>
+              ) : (
+                <div className="game-content">
+                  <div className="game-board-section">
+                    <GameBoard onBoardCreated={handleBoardCreated} />
+                  </div>
+                  <GameControls
+                    onHint={handleHint}
+                    onNewGame={clearAllValues}
+                    wrongAttempts={wrongAttempts}
+                    hintCount={hintCount}
+                  />
+                </div>
+              )}
             </div>
+          </div>
+          {showRestartPopup && (
+            <RestartPopup
+              onRestart={clearAllValues}
+              onClose={() => setShowRestartPopup(false)}
+            />
           )}
-        </div>
-      </div>
-      {showRestartPopup && (
-        <RestartPopup
-          onRestart={clearAllValues}
-          onClose={() => setShowRestartPopup(false)}
-        />
+        </>
       )}
     </div>
   );
