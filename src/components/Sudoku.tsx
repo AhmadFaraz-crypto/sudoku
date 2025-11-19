@@ -648,6 +648,3 @@ const Sudoku: React.FC = () => {
 };
 
 export default Sudoku;
-
-
-
